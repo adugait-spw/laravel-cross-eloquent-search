@@ -362,9 +362,9 @@ class Searcher
             }
 
             return array_filter([
-                DB::raw("{$qualifiedKeyName} as {$modelToSearchThrough->getModelKey()}"),
-                DB::raw("{$qualifiedOrderByColumnName} as {$modelToSearchThrough->getModelKey('order')}"),
-                $this->orderByModel ? DB::raw("{$modelOrderKey} as {$modelToSearchThrough->getModelKey('model_order')}") : null,
+                DB::raw("{$qualifiedKeyName}::BIGINT as {$modelToSearchThrough->getModelKey()}"),
+                DB::raw("{$qualifiedOrderByColumnName}::BIGINT as {$modelToSearchThrough->getModelKey('order')}"),
+                $this->orderByModel ? DB::raw("{$modelOrderKey}::BIGINT as {$modelToSearchThrough->getModelKey('model_order')}") : null,
             ]);
         })->all();
     }
