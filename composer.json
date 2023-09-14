@@ -1,24 +1,20 @@
 {
-    "name": "konekt/search",
+    "name": "adugait-spw/laravel-cross-eloquent-search",
     "description": "Laravel package to search through multiple Eloquent models. Supports pagination, eager loading relations, single/multiple columns, sorting and scoped queries.",
     "keywords": [
         "protonemedia",
-        "konekt",
         "laravel",
         "search",
         "eloquent"
     ],
-    "homepage": "https://github.com/artkonekt/search",
+    "homepage": "https://github.com/adugait-spw/laravel-cross-eloquent-search",
     "license": "MIT",
     "type": "library",
     "authors": [
         {
-            "name": "Pascal Baljet",
-            "email": "pascal@protone.media",
+            "name": "Aurélien Dugait",
+            "email": "aurelien.dugait@spw.wallonie.be",
             "role": "Developer"
-        },
-        {
-            "name": "Attila Fulop"
         }
     ],
     "require": {
