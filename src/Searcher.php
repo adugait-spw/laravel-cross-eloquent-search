@@ -361,11 +361,22 @@ class Searcher
                 }
             }
 
-            return array_filter([
-                DB::raw("{$qualifiedKeyName}::BIGINT as {$modelToSearchThrough->getModelKey()}"),
-                DB::raw("{$qualifiedOrderByColumnName}::BIGINT as {$modelToSearchThrough->getModelKey('order')}"),
-                $this->orderByModel ? DB::raw("{$modelOrderKey}::BIGINT as {$modelToSearchThrough->getModelKey('model_order')}") : null,
-            ]);
+            if($this->dialect->getName() == 'Postgres')
+            {
+                return array_filter([
+                    str_contains($qualifiedKeyName, '.updated_at') ? DB::raw("extract('epoch' from $qualifiedKeyName)::BIGINT as {$modelToSearchThrough->getModelKey()}") : DB::raw("{$qualifiedKeyName}::BIGINT as {$modelToSearchThrough->getModelKey()}"),
+                    str_contains($qualifiedOrderByColumnName, '.updated_at') ? DB::raw("extract('epoch' from $qualifiedOrderByColumnName)::BIGINT as {$modelToSearchThrough->getModelKey('order')}") : DB::raw("{$qualifiedOrderByColumnName}::BIGINT as {$modelToSearchThrough->getModelKey('order')}"),
+                    $this->orderByModel ? DB::raw("{$modelOrderKey}::BIGINT as {$modelToSearchThrough->getModelKey('model_order')}") : null,
+                ]);
+            }
+            else
+            {
+                return array_filter([
+                    DB::raw("{$qualifiedKeyName} as {$modelToSearchThrough->getModelKey()}"),
+                    DB::raw("{$qualifiedOrderByColumnName} as {$modelToSearchThrough->getModelKey('order')}"),
+                    $this->orderByModel ? DB::raw("{$modelOrderKey} as {$modelToSearchThrough->getModelKey('model_order')}") : null,
+                ]);
+            }
         })->all();
     }
 
